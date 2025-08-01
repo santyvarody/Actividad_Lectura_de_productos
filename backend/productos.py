@@ -30,5 +30,5 @@ def consultarProducto(documento):
                 valores.append(celda.value)
 
             return valores
-        else:
-            return None            
+    else:
+        return None            

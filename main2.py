@@ -1,5 +1,5 @@
 from backend.productos import consultarProducto
 
-productos = consultarProducto(10)
+productos = consultarProducto(20)
 
 print(productos)
