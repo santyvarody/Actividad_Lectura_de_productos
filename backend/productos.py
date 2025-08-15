@@ -18,19 +18,22 @@ def listarProductos():
 
     return filas
 
-def consultarProducto(id):
-    refFilas = hoja.iter_rows(min_row=2, max_row=hoja.max_row, min_col=1, max_col=4)
-    refFilasEnum = enumerate(refFilas)
+def consultarProducto(id, soloValores=True):
+    reffilas = hoja.iter_rows(min_row=2, max_row=hoja.max_row, min_col=1, max_col=4)
+    reffilasEnum = enumerate(reffilas)
 
-    for idx, refFila in refFilasEnum:
-        if refFila[0].value == id:
-            valores = []
-            valores.append(idx)
+    for idx, reffila in reffilasEnum:
+        if reffila[0].value == id:
+            if soloValores:
+                valores = []
+                valores.append(idx)
 
-            for celda in refFila:
-                valores.append(celda.value)
+                for celda in reffila:
+                    valores.append(celda.value)
 
-            return valores
+                return valores
+            else:
+                return reffila
     else:
         return None            
 
@@ -57,3 +60,18 @@ def eliminarProducto(id):
     guardarHoja(hoja)
 
     return True
+
+def actualizarProducto(id, nombre, precio, cantidad):
+    nuevos_valores = (id, nombre, precio, cantidad)
+
+    refFila = consultarProducto(id, False)
+
+    if refFila == None:
+        return False
+    
+    for celda, nuevo_valor in zip(refFila, nuevos_valores):
+        celda.value = nuevo_valor
+
+    guardarHoja(hoja)
+
+    return True    
